@@ -1,3 +1,17 @@
+import Page from "./component/page";
+import Header from "./component/header";
+import Photo from "./component/photo";
+import RoomList from "./component/room-list";
+import Description from "./component/description";
+import Title from "./component/title";
+import Price from "./component/price";
+import Details from "./component/details";
+import Amenities from "./component/amenities";
+import Contact from "./component/contact";
+import Additional from "./component/additional";
+import Reviews from "./component/reviews";
+import Attractions from "./component/attractions";
+
 function App() {
   const data = {
     listing_name: "Іст-Сайд Біл",
@@ -92,7 +106,7 @@ function App() {
         "Public buses and taxis available within walking distance.",
       host_languages: ["English", "Spanish"],
       special_offers: "10% discount for bookings of 7 nights or more.",
-      "check-in_instructions":
+      checkin_instructions:
         "Check-in time is 3:00 PM. Please contact us in advance with your estimated arrival time.",
     },
 
@@ -144,7 +158,38 @@ function App() {
     ],
   };
 
-  return <div>Hello World</div>;
+  return (
+    <Page>
+      <Header />
+      <Title
+        title={data.listing_name}
+        rating={data.reviews_summary.average_rating}
+        review={data.reviews_summary.total_reviews}
+        city={data.location.city}
+        country={data.location.country}
+        superhost={data.superhost}
+      />
+      <Photo src={data.image} name={data.listing_name} />
+      <Price
+        price={data.price.original_price}
+        discount={data.price.discounted_price}
+        currency={data.price.currency}
+        cleaning={data.price.cleaning_fee}
+        service={data.price.service_fee}
+        checkin={data.availability.checkin_date}
+        checkout={data.availability.checkout_date}
+      />
+      <RoomList list={data.roomTypes} />
+      <Description title="Description" children={data.description} />
+      <Details {...data.property_details} />
+      <Description title="About neighbours" children={data.neighborhood_info} />
+      <Amenities {...data.amenities} />
+      <Contact {...data.contact_info} />
+      <Additional {...data.additional_properties} />
+      <Reviews list={data.guestReviews} />
+      <Attractions list={data.nearbyAttractions} />
+    </Page>
+  );
 }
 
 export default App;
